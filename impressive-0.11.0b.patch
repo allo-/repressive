@@ -1,0 +1,23 @@
+--- impressive.py.orig	2015-10-12 19:07:35.903648575 +0200
++++ impressive.py	2015-10-12 19:06:32.600698850 +0200
+@@ -118,6 +118,7 @@
+ UseBlurShader = True
+ TimeTracking = False
+ EventTestMode = False
++ActionQueue = []
+ 
+ 
+ # import basic modules
+@@ -4705,6 +4706,12 @@
+         SetFullscreen(False)
+         Platform.Minimize()
+ 
++    def _X_queue_action(self):
++        global ActionQueue
++        while len(ActionQueue):
++            action, args = ActionQueue.pop(0)
++            action(*args)
++
+     def _quit(self):
+         "quit Impressive immediately"
+         Platform.PostQuitEvent()
