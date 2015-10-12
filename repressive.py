@@ -87,7 +87,7 @@ def repressive_mainthread():
             next=(impressive.Pcurrent+1)
         )
 
-    app.run(host="0.0.0.0")
+    app.run(host="0.0.0.0", threaded=True)
 LOGO = """
 iVBORw0KGgoAAAANSUhEUgAAAQAAAABACAAAAADQNvZiAAALZElEQVR42u1beVgURxavGWa4hkME
 FQ/I4rHeBwQMRo1447lRE9YYL1jvJRLjGlfNZ7w1ajafxou4rrdG4xFWjSKKAqsbb9cc7nqbbIx3
