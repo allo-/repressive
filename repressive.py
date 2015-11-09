@@ -79,6 +79,49 @@ def repressive_mainthread():
     def goto_prev():
         return goto(impressive.GetNextPage(impressive.Pcurrent, -1))
 
+    @app.route("/spotlight/enter")
+    def spotlight_enter():
+        impressive.ActionQueue.append((
+            impressive.PageDisplayActions._spotlight_enter,
+            []
+        ))
+        impressive.Platform.ScheduleEvent("$queue-action", 1)
+        return "OK"
+
+    @app.route("/mouse/pos/<int:x>,<int:y>")
+    def mouse_pos(x, y):
+        impressive.ActionQueue.append((
+            impressive.Platform.SetMousePos,
+            [(x, y)]
+        ))
+        impressive.Platform.ScheduleEvent("$queue-action", 1)
+        return "OK"
+
+    @app.route("/mouse/pos/rel:<int:x>,<int:y>")
+    def mouse_pos_relative(x, y):
+        impressive.ActionQueue.append((
+            impressive.Platform.SetMousePos,
+            [(x/100.0 * impressive.ScreenWidth, y/100.0 * impressive.ScreenHeight)]
+        ))
+        impressive.Platform.ScheduleEvent("$queue-action", 1)
+        return "OK"
+
+    @app.route("/box/rel:<float:top>,<float:left>,<float:lower>,<float:right>")
+    def box(top, left, lower, right):
+        impressive.MarkUL = (top,
+            left)
+        impressive.MarkLR = (lower,
+            right)
+        impressive.Marking = True
+        impressive.ActionQueue.append((
+            impressive.PageDisplayActions._box_add, []
+        ))
+        #impressive.ActionQueue.append((
+        #    impressive.PageDisplayActions._box_add_RELEASE, []
+        #))
+        impressive.Platform.ScheduleEvent("$queue-action", 1)
+        return "OK"
+
     @app.route("/")
     def main():
         return render_template(
