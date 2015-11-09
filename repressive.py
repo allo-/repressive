@@ -83,8 +83,8 @@ def repressive_mainthread():
     def main():
         return render_template(
             "main.html",
-            prev=(impressive.Pcurrent, -1),
-            next=(impressive.Pcurrent+1)
+            prev=(impressive.Pcurrent -1),
+            next=(impressive.Pcurrent +1)
         )
 
     app.run(host="0.0.0.0", threaded=True)
